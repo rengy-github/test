@@ -1,0 +1,179 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <!-- 指定了POM模型的版本,对于maven3来说,就是4.0.0 -->
+  <modelVersion>4.0.0</modelVersion>
+  <!--定义所属组，一般写组织或公司-->
+  <groupId>com.uniontrip</groupId>
+  <!--项目标识-->
+  <artifactId>lvzhi</artifactId>
+  <packaging>jar</packaging>
+  <!--项目的版本，SNAPSHOT代表是开发中不稳定-->
+  <version>0.0.1-SNAPSHOT</version>
+  <!--项目名称-->
+  <name>溯源系统</name>
+  <!--项目描述-->
+  <description>农业智慧云平台溯源系统</description>
+  
+	<properties>
+		<!-- 依赖库的版本定义，重复定义的时候可以引用 -->
+		<shiro.version>1.2.5</shiro.version>
+	</properties>
+	
+  <!--父模块-->
+  <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.3.5.RELEASE</version>
+  </parent>
+  
+  <!--依赖库定义 -->
+  <dependencies>
+  		<!--springboot依赖-->		
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--当打包war的时候，指定scope，tomcat依赖容器已提供-->	
+        <!-- <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency> -->
+        <!--支持jsp-->
+		<!-- <dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<scope>provided</scope>
+		</dependency> -->
+		<!--数据库连接池 -->		
+		<dependency>
+		    <groupId>com.zaxxer</groupId>
+		    <artifactId>HikariCP</artifactId>
+		</dependency>
+		<!--mysql驱动 -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<!--spring的jdbc模块 -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<!--web安全shiro-->
+		<dependency>
+		    <groupId>org.apache.shiro</groupId>
+		    <artifactId>shiro-spring</artifactId>
+		    <version>${shiro.version}</version>
+		</dependency>
+		<!--shiro ehcache支持-->
+		<dependency>
+		    <groupId>org.apache.shiro</groupId>
+		    <artifactId>shiro-ehcache</artifactId>
+		    <version>${shiro.version}</version>
+		</dependency>
+		
+		<!--不使用shiroehcache，单独使用ehcache的时候会用到
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		</dependency>-->
+		
+		<!--common组件-->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>3.4</version>
+		</dependency>
+		<!--开始-wechat4j依赖-开始-->
+		<dependency>
+		    <groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		    <version>1.10</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>fastjson</artifactId>
+		    <version>1.2.11</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpclient</artifactId>
+		    <version>4.5.2</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpmime</artifactId>
+		    <version>4.5.2</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>fluent-hc</artifactId>
+		    <version>4.5.2</version>
+		</dependency>
+	<!--结束-wechat4j依赖-结束-->
+		<!--开始-zxing二维码-开始 -->
+		<dependency>
+		    <groupId>com.google.zxing</groupId>
+		    <artifactId>core</artifactId>
+		    <version>3.2.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.google.zxing</groupId>
+		    <artifactId>javase</artifactId>
+		    <version>3.2.1</version>
+		</dependency>
+		<!--结束-zxing二维码-结束-->
+		<!--测试模块-->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-test</artifactId>
+		    <scope>test</scope>
+		</dependency>
+    </dependencies>
+
+    <build>
+    	<resources>
+                <resource>
+                    <directory>${basedir}/src/main/webapp</directory>
+                    <targetPath>/webapp</targetPath>
+                </resource>
+                <resource>
+                    <directory>${basedir}/src/main/resources</directory>
+                    <includes>
+                        <include>**/**</include>
+                    </includes>
+                </resource>
+        </resources>
+        <plugins>
+        <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-surefire-plugin</artifactId>
+	        <configuration>
+	        	<!--跳过测试-->
+	          <skip>true</skip>
+	        </configuration>
+      	</plugin>
+       	<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<configuration>
+				<source>1.8</source>
+				<target>1.8</target>
+				<encoding>UTF-8</encoding>
+				<compilerArguments>
+					<verbose />
+					<bootclasspath>${JAVA_HOME}/jre/lib/rt.jar</bootclasspath>
+				</compilerArguments>
+			</configuration>
+		</plugin>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+            	<executable>true</executable>
+				<mainClass>com.uniontrip.Run</mainClass>
+			</configuration>
+        </plugin>
+	</plugins>
+    </build>
+</project>
